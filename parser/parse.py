@@ -1,26 +1,26 @@
 import os
 import json
 
-from inserting import *
+#from inserting import *
 
 cool_list = [
 	'"event_type": "book"', 								#document_events
 	'"event_type": "edx.certificate.created"',				#certificate_events
-	'"event_type": "edx.course.enrollment.activated"',		#enrollment_evnts
+	'"event_type": "edx.course.enrollment.activated"',		###enrollment_evnts
 	'"event_type": "edx.course.enrollment.deactivated"',	#enrollment_evnts
 	'"event_type": "edx.video.paused"',						#video_events
 	'"event_type": "edx.video.played"',						#video_events
 	'"event_type": "edx.video.position.changed"',			#video_events
 	'"event_type": "edx.video.stoped"',						#video_events
 	'"event_type": "speed_change_video"',					#video_events
-	'"event_type": "page_close"',							#link_events
-	'"event_type": "seq_goto"',								#sequence_events
-	'"event_type": "seq_next"',								#sequence_events
-	'"event_type": "seq_prev"',								#sequence_events
-	'"event_type": "problem_check"',						#check_answer_events
+	'"event_type": "page_close"',							###link_events
+	'"event_type": "seq_goto"',								###sequence_events
+	'"event_type": "seq_next"',								###sequence_events
+	'"event_type": "seq_prev"',								###sequence_events
+	'"event_type": "problem_check"',						###check_answer_events
 	'"event_type": "problem_check_fail"',					#check_answer_events
-	'"event_type": "problem_show"',							#check_answer_events
-	'"event_type": "showanswer"',							#check_answer_events
+	'"event_type": "problem_show"',							###check_answer_events
+	'"event_type": "showanswer"',							###check_answer_events
 	'"event_type": "hint"'									#check_answer_events
 ]
 
@@ -57,9 +57,11 @@ for filename in os.listdir(sourse_path):
 				for c in cool_list:
 					if c in l:
 						cool += 1
+						cool_dict[c.split(': ')[1].replace('"', '')] += 1
 						if c == '"event_type": "problem_check"':
 							event = json.loads(l)
-							problem_check(event)
+							#print(event)
+							#problem_check(event)
 			count += len(_list)
 print("\nTotal:\t" + str(count))
 print("\nUseful:\t" + str(cool) + "\n")

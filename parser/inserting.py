@@ -8,7 +8,28 @@ cursor = conn.cursor()
 _dict = {
 	'"event_type": "problem_check"': {
 		'type': 'problem_check',
-	}
+	},
+    '"event_type": "edx.course.enrollment.activated"': {
+        'type': 'enrollment_activated'
+    },
+    '"event_type": "page_close"': {
+        'type': 'page_close'
+    },
+    '"event_type": "seq_goto"': {
+        'type': 'seq_goto'
+    },
+    '"event_type": "seq_next"': {
+        'type': 'seq_next'
+    },
+    '"event_type": "seq_prev"': {
+        'type': 'seq_prev'
+    },
+    '"event_type": "problem_show"': {
+        'type': 'problem_show'
+    },
+    '"event_type": "showanswer"': {
+        'type': 'showanswer'
+    }
 }
 
 def problem_check(event):
@@ -27,3 +48,24 @@ def problem_check(event):
 
     cursor.execute(insert)
     conn.commit()
+
+def enrollment_activated:
+    pass
+
+def page_close:
+    pass
+
+def seq_goto:
+    pass
+
+def seq_next:
+    pass
+
+def seq_prev:
+    pass
+
+def problem_show:
+    pass
+
+def showanswer::
+    pass
