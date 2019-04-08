@@ -1,7 +1,8 @@
 import os
 import json
 
-#from inserting import *
+from inserting import *
+
 
 cool_list = [
 	'"event_type": "book"', 								#document_events
@@ -60,8 +61,28 @@ for filename in os.listdir(sourse_path):
 						cool_dict[c.split(': ')[1].replace('"', '')] += 1
 						if c == '"event_type": "problem_check"':
 							event = json.loads(l)
-							#print(event)
-							#problem_check(event)
+							problem_check(event)
+						elif c == '"event_type": "edx.course.enrollment.activated"':
+							event = json.loads(l)
+							enrollment_activated(event)
+						elif c == '"event_type": "page_close"':
+							event = json.loads(l)
+							page_close(event)
+						elif c == '"event_type": "seq_goto"':
+							event = json.loads(l)
+							seq_goto(event)
+						elif c == '"event_type": "seq_next"':
+							event = json.loads(l)
+							seq_next(event)
+						elif c == '"event_type": "seq_prev"':
+							event = json.loads(l)
+							seq_prev(event)
+						elif c == '"event_type": "problem_show"':
+							event = json.loads(l)
+							problem_show(event)
+						elif c == '"event_type": "showanswer"':
+							event = json.loads(l)
+							showanswer(event)
 			count += len(_list)
 print("\nTotal:\t" + str(count))
 print("\nUseful:\t" + str(cool) + "\n")
