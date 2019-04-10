@@ -1,5 +1,4 @@
 from app import db, app
-from geoalchemy2 import Geometry
 from datetime import datetime
 
 __all__ = (
@@ -11,7 +10,7 @@ __all__ = (
     'LinkEvents',
     'CheckAnswerEvents',
     'CertificateEvents',
-    'EnrollmentEnent'
+    'EnrollmentEvents'
 )
 
 class Users(db.Model):
@@ -105,7 +104,7 @@ class CertificateEvents(db.Model):
     course_id = db.Column(db.String)
 
 
-class EnrollmentEnent(db.Model):
+class EnrollmentEvents(db.Model):
 
     __tablename__  = 'enrollment_evnts'
 

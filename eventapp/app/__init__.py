@@ -16,9 +16,4 @@ db.app = app
 db.init_app(app)
 
 from app.models.data import *
-from app.views.admin import *
-# Views
-# from app.views.tabs import *
 from app.views import *
-# Jinja2 filters
-from utils.jinja2 import *
