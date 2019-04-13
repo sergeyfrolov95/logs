@@ -1,7 +1,11 @@
 import os
 import json
+from json import JSONDecodeError
 
 from inserting import *
+
+import time
+start_time = time.time()
 
 
 cool_list = [
@@ -55,37 +59,48 @@ for filename in os.listdir(sourse_path):
 			f = f.read()
 			_list = f.split("\n")
 			for l in _list:
+				other = True
 				for c in cool_list:
 					if c in l:
+						other = False
 						cool += 1
 						cool_dict[c.split(': ')[1].replace('"', '')] += 1
 						if c == '"event_type": "problem_check"':
 							event = json.loads(l)
-							problem_check(event)
+							problem_check(event, users)
 						elif c == '"event_type": "edx.course.enrollment.activated"':
 							event = json.loads(l)
-							enrollment_activated(event)
+							enrollment_activated(event, users)
 						elif c == '"event_type": "page_close"':
 							event = json.loads(l)
-							page_close(event)
+							page_close(event, users)
 						elif c == '"event_type": "seq_goto"':
 							event = json.loads(l)
-							seq_goto(event)
+							seq_goto(event, users)
 						elif c == '"event_type": "seq_next"':
 							event = json.loads(l)
-							seq_next(event)
+							seq_next(event, users)
 						elif c == '"event_type": "seq_prev"':
 							event = json.loads(l)
-							seq_prev(event)
+							seq_prev(event, users)
 						elif c == '"event_type": "problem_show"':
 							event = json.loads(l)
-							problem_show(event)
+							problem_show(event, users)
 						elif c == '"event_type": "showanswer"':
 							event = json.loads(l)
-							showanswer(event)
+							showanswer(event, users)
+				if other:
+					try:
+						event = json.loads(l)
+						others(event, users)
+					except JSONDecodeError as e:
+						continue
+
 			count += len(_list)
+conn.commit()
 print("\nTotal:\t" + str(count))
 print("\nUseful:\t" + str(cool) + "\n")
 print("Types with count:\n")
 for k, v in cool_dict.items():
 	print(k + ': ' + str(v))
+print("\n--- %s seconds ---" % round((time.time() - start_time), 1))

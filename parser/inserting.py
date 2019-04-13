@@ -33,132 +33,200 @@ _dict = {
     }
 }
 
-def problem_check(event):
+users = {}
+
+def others(event, users):
+    if not event['context'].get('user_id', None):
+        return 0
+    if not event['time']:
+        return 0
+    user = (event['context']['user_id'], event['username'])
+    if user[0] not in users:
+        users[user[0]] = user[1]
+        insert = """insert into users (id, username)
+                values {}""".format(user)
+        cursor.execute(insert)
+    tup = (
+        user[0],
+        event['time']
+    )
+    insert = """insert into others (user_id, event_time) values
+            {}""".format(tup)
+    cursor.execute(insert)
+
+
+def problem_check(event, users):
+    user = (event['context']['user_id'], event['username'])
+    if user[0] not in users:
+        users[user[0]] = user[1]
+        insert = """insert into users (id, username)
+                values {}""".format(user)
+        cursor.execute(insert)
+
     tup = [
-        event['username'],
         event['context']['user_id'],
+        event['context']['course_id'],
         event['time'],
         _dict['"event_type": "problem_check"']['type'],
-        event['context']['course_id'],
         event['event']['attempts'] if type(event.get('event', None)) != str else 0,
         event['event']['success'] if type(event.get('event', None)) != str else ''
     ]
-    tup[6] = True if tup[6] == 'correct' else False
+    tup[5] = True if tup[5] == 'correct' else False
     insert = """insert into check_answer_events
-                (username, user_id, event_time, type, problem_id, attempts, success)
+                (user_id, course, event_time, type, attempts, success)
                 values {}""".format(tuple(tup))
 
     cursor.execute(insert)
-    conn.commit()
 
-def enrollment_activated(event):
+def enrollment_activated(event, users):
+    user = (event['event']['user_id'], event['username'])
+    if user[0] not in users:
+        users[user[0]] = user[1]
+        insert = """insert into users (id, username)
+                values {}""".format(user)
+        cursor.execute(insert)
+
     tup = (
-        event['username'],
         event['event']['user_id'],
+        event['context']['course_id'],
         event['time'],
-        _dict['"event_type": "edx.course.enrollment.activated"']['type'],
-        event['context']['course_id']
+        _dict['"event_type": "edx.course.enrollment.activated"']['type']
     )
     insert = """insert into enrollment_evnts
-                (username, user_id, event_time, type, course_id)
+                (user_id, course, event_time, type)
                 values {}""".format(tup)
 
     cursor.execute(insert)
-    conn.commit()
 
-def page_close(event):
+def page_close(event, users):
+    if not event['context'].get('user_id', None):
+        return 0
+    user = (event['context']['user_id'], event['username'])
+    if user[0] not in users:
+        users[user[0]] = user[1]
+        insert = """insert into users (id, username)
+                values {}""".format(user)
+        cursor.execute(insert)
+
     tup = (
-        event['username'],
-        event['context']['user_id'] if event['context']['user_id'] is not None else 0,
+        event['context']['user_id'],
+        event['context']['course_id'],
         event['time'],
         event['page'],
         ''
     )
     insert = """insert into link_events
-                (username, user_id, event_time, current_url, target_url)
+                (user_id,course, event_time, current_url, target_url)
                 values {}""".format(tup)
 
     cursor.execute(insert)
-    conn.commit()
 
-def seq_goto(event):
+def seq_goto(event, users):
+    user = (event['context']['user_id'], event['username'])
+    if user[0] not in users:
+        users[user[0]] = user[1]
+        insert = """insert into users (id, username)
+                values {}""".format(user)
+        cursor.execute(insert)
+
     new_old = json.loads(event['event'])
     tup = (
-        event['username'],
         event['context']['user_id'],
+        event['context']['course_id'],
         event['time'],
         _dict['"event_type": "seq_goto"']['type'],
         new_old['new'],
         new_old['old']
     )
     insert = """insert into sequence_events
-                (username, user_id, event_time, type, new, old)
+                (user_id, course, event_time, type, new, old)
                 values {}""".format(tup)
     cursor.execute(insert)
-    conn.commit()
 
-def seq_next(event):
+def seq_next(event, users):
+    user = (event['context']['user_id'], event['username'])
+    if user[0] not in users:
+        users[user[0]] = user[1]
+        insert = """insert into users (id, username)
+                values {}""".format(user)
+        cursor.execute(insert)
+
     new_old = json.loads(event['event'])
     tup = (
-        event['username'],
         event['context']['user_id'],
+        event['context']['course_id'],
         event['time'],
         _dict['"event_type": "seq_next"']['type'],
         new_old['new'],
         new_old['old']
     )
     insert = """insert into sequence_events
-                (username, user_id, event_time, type, new, old)
+                (user_id, course, event_time, type, new, old)
                 values {}""".format(tup)
     cursor.execute(insert)
-    conn.commit()
 
-def seq_prev(event):
+def seq_prev(event, users):
+    user = (event['context']['user_id'], event['username'])
+    if user[0] not in users:
+        users[user[0]] = user[1]
+        insert = """insert into users (id, username)
+                values {}""".format(user)
+        cursor.execute(insert)
+
     new_old = json.loads(event['event'])
     tup = (
-        event['username'],
         event['context']['user_id'],
+        event['context']['course_id'],
         event['time'],
         _dict['"event_type": "seq_prev"']['type'],
         new_old['new'],
         new_old['old']
     )
     insert = """insert into sequence_events
-                (username, user_id, event_time, type, new, old)
+                (user_id, course, event_time, type, new, old)
                 values {}""".format(tup)
     cursor.execute(insert)
-    conn.commit()
 
-def problem_show(event):
+def problem_show(event, users):
+    user = (event['context']['user_id'], event['username'])
+    if user[0] not in users:
+        users[user[0]] = user[1]
+        insert = """insert into users (id, username)
+                values {}""".format(user)
+        cursor.execute(insert)
+
     tup = (
-        event['username'],
         event['context']['user_id'],
+        event['context']['course_id'],
         event['time'],
         _dict['"event_type": "problem_show"']['type'],
-        event['context']['course_id'],
         0,
         False
     )
     insert = """insert into check_answer_events
-                (username, user_id, event_time, type, problem_id, attempts, success)
+                (user_id, course, event_time, type, attempts, success)
                 values {}""".format(tup)
 
     cursor.execute(insert)
-    conn.commit()
 
-def showanswer(event):
+def showanswer(event, users):
+    user = (event['context']['user_id'], event['username'])
+    if user[0] not in users:
+        users[user[0]] = user[1]
+        insert = """insert into users (id, username)
+                values {}""".format(user)
+        cursor.execute(insert)
+
     tup = (
-        event['username'],
         event['context']['user_id'],
+        event['context']['course_id'],
         event['time'],
         _dict['"event_type": "showanswer"']['type'],
-        event['context']['course_id'],
         0,
         False
     )
     insert = """insert into check_answer_events
-                (username, user_id, event_time, type, problem_id, attempts, success)
+                (user_id, course, event_time, type, attempts, success)
                 values {}""".format(tup)
 
     cursor.execute(insert)
-    conn.commit()
