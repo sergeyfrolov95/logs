@@ -8,7 +8,7 @@ from jinja2 import Markup
 from sqlalchemy import func
 from flask_admin import expose
 
-class DocumentView(ModelView):
+class OthersView(ModelView):
 
     can_create = False
     can_delete = False
@@ -16,28 +16,18 @@ class DocumentView(ModelView):
     can_view_details = True
     can_export = True
 
-    column_list = ('user_id', 'course', 'event_time', 'type', 'new', 'old')
+    column_list = ('user_id', 'event_time')
 
     column_labels = dict(
         user_id='Имя пользователя',
-        course='Идентификатор курса',
-        event_time='Время события',
-        type='Тип события',
-        new='Предыдущая страница',
-        old='Следующая страница'
+        event_time='Время события'
     )
 
     column_formatters = dict(
         user_id=lambda v, c, m, p: db.session.query(Users.username).filter(Users.id == m.user_id).one_or_none()[0],
-        event_time=lambda v, c, m, p: datetime.strftime(m.event_time, '%d.%m.%Y %H:%M:%S'),
-        type=lambda v, c, m, p: app.config['doc_types'][m.type]
+        event_time=lambda v, c, m, p: datetime.strftime(m.event_time, '%d.%m.%Y %H:%M:%S')
     )
 
     column_default_sort = ('event_time', True)
     column_display_pk = False
-    column_searchable_list = ('course',)
-
-    column_choices = {
-        'type': app.config['doc_types'].items()
-    }
-    column_filters = ('course', 'event_time', 'type')
+    column_filters = ('event_time',)

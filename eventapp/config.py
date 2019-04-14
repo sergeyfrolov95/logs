@@ -10,6 +10,7 @@ class Base(object):
     # Localization
     ENCODING = 'utf-8'
     BABEL_DEFAULT_LOCALE = 'ru'
+    SECRET_KEY = 'such_secret'
 
     # Database
     SQLALCHEMY_DATABASE_URI = 'postgresql://sergey@localhost/events'

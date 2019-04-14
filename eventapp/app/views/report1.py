@@ -8,30 +8,27 @@ from jinja2 import Markup
 from sqlalchemy import func
 from flask_admin import expose
 
-class CertificateView(ModelView):
+class Report1View(ModelView):
 
     can_create = False
     can_delete = False
-    can_edit = False
+    can_edit = True
     can_view_details = True
     can_export = True
 
-    column_list = ('user_id', 'course', 'event_time', 'course_id')
+    column_list = ('user_id', 'course', 'per_start', 'per_end')
 
     column_labels = dict(
         user_id='Имя пользователя',
         course='Идентификатор курса',
-        event_time='Время события',
-        course_id='Курс'
+        per_start='Начало промежутка',
+        per_end='Конец промежутка'
     )
 
     column_formatters = dict(
-        user_id=lambda v, c, m, p: db.session.query(Users.username).filter(Users.id == m.user_id).one_or_none()[0],
-        event_time=lambda v, c, m, p: datetime.strftime(m.event_time, '%d.%m.%Y %H:%M:%S')
+        user_id=lambda v, c, m, p: db.session.query(Users.username).filter(Users.id == m.user_id).one_or_none()[0] if m.user_id else '',
+        per_start=lambda v, c, m, p: datetime.strftime(m.per_start, '%d.%m.%Y') if m.per_start else '',
+        per_end=lambda v, c, m, p: datetime.strftime(m.per_end, '%d.%m.%Y') if m.per_end else ''
     )
 
-    column_default_sort = ('event_time', True)
     column_display_pk = False
-    column_searchable_list = ('course',)
-
-    column_filters = ('course', 'event_time')

@@ -11,7 +11,7 @@ drop table report_1;
 drop table users;
 
 
--- USERS AND COURSES
+-- USERS
 create table users (
   id serial primary key,
   username varchar(128)

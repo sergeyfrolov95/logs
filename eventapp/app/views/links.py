@@ -15,3 +15,24 @@ class LinksView(ModelView):
     can_edit = False
     can_view_details = True
     can_export = True
+
+    column_list = ('user_id', 'course', 'event_time', 'current_url', 'target_url')
+
+    column_labels = dict(
+        user_id='Имя пользователя',
+        course='Идентификатор курса',
+        event_time='Время события',
+        current_url='Текущий URL',
+        target_url='Целевой URL'
+    )
+
+    column_formatters = dict(
+        user_id=lambda v, c, m, p: db.session.query(Users.username).filter(Users.id == m.user_id).one_or_none()[0],
+        event_time=lambda v, c, m, p: datetime.strftime(m.event_time, '%d.%m.%Y %H:%M:%S'),
+    )
+
+    column_default_sort = ('event_time', True)
+    column_display_pk = False
+    column_searchable_list = ('course', 'current_url', 'target_url')
+
+    column_filters = ('course', 'event_time')
