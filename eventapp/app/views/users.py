@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask_admin.contrib.sqla import ModelView
 from app import app, db
 from app.models.data import *
@@ -19,8 +20,8 @@ class UsersView(ModelView):
         column_list = ('id', 'username')
 
         column_labels = dict(
-            id='Идентификатор пользователя',
-            username = 'Имя пользователя'
+            id=u'Идентификатор пользователя',
+            username=u'Имя пользователя'
         )
 
         column_default_sort = 'id'

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask_admin.contrib.sqla import ModelView
 from app import app, db
 from app.models.data import *
@@ -19,11 +20,11 @@ class VideoView(ModelView):
     column_list = ('user_id', 'course', 'event_time', 'type', 'timecode')
 
     column_labels = dict(
-        user_id='Имя пользователя',
-        course='Идентификатор курса',
-        event_time='Время события',
-        type='Тип события',
-        timecode='Таймкод события'
+        user_id=u'Имя пользователя',
+        course=u'Идентификатор курса',
+        event_time=u'Время события',
+        type=u'Тип события',
+        timecode=u'Таймкод события'
     )
 
     column_formatters = dict(

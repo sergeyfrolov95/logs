@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask_admin.contrib.sqla import ModelView
 from app import app, db
 from app.models.data import *
@@ -19,8 +20,8 @@ class OthersView(ModelView):
     column_list = ('user_id', 'event_time')
 
     column_labels = dict(
-        user_id='Имя пользователя',
-        event_time='Время события'
+        user_id=u'Имя пользователя',
+        event_time=u'Время события'
     )
 
     column_formatters = dict(

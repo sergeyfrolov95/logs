@@ -97,6 +97,7 @@ for filename in os.listdir(sourse_path):
 						continue
 
 			count += len(_list)
+insert_courses()
 conn.commit()
 print("\nTotal:\t" + str(count))
 print("\nUseful:\t" + str(cool) + "\n")

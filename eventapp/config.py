@@ -11,6 +11,7 @@ class Base(object):
     ENCODING = 'utf-8'
     BABEL_DEFAULT_LOCALE = 'ru'
     SECRET_KEY = 'such_secret'
+    REPORT_PATH = '/home/sergey/Documents/logs/eventapp/app/report_temp'
 
     # Database
     SQLALCHEMY_DATABASE_URI = 'postgresql://sergey@localhost/events'

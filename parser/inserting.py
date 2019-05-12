@@ -34,6 +34,7 @@ _dict = {
 }
 
 users = {}
+courses = []
 
 def others(event, users):
     if not event['context'].get('user_id', None):
@@ -63,6 +64,8 @@ def problem_check(event, users):
                 values {}""".format(user)
         cursor.execute(insert)
 
+    if event['context']['course_id'] not in courses:
+        courses.append(event['context']['course_id'])
     tup = [
         event['context']['user_id'],
         event['context']['course_id'],
@@ -86,6 +89,8 @@ def enrollment_activated(event, users):
                 values {}""".format(user)
         cursor.execute(insert)
 
+    if event['context']['course_id'] not in courses:
+        courses.append(event['context']['course_id'])
     tup = (
         event['event']['user_id'],
         event['context']['course_id'],
@@ -108,6 +113,8 @@ def page_close(event, users):
                 values {}""".format(user)
         cursor.execute(insert)
 
+    if event['context']['course_id'] not in courses:
+        courses.append(event['context']['course_id'])
     tup = (
         event['context']['user_id'],
         event['context']['course_id'],
@@ -129,6 +136,8 @@ def seq_goto(event, users):
                 values {}""".format(user)
         cursor.execute(insert)
 
+    if event['context']['course_id'] not in courses:
+        courses.append(event['context']['course_id'])
     new_old = json.loads(event['event'])
     tup = (
         event['context']['user_id'],
@@ -151,6 +160,8 @@ def seq_next(event, users):
                 values {}""".format(user)
         cursor.execute(insert)
 
+    if event['context']['course_id'] not in courses:
+        courses.append(event['context']['course_id'])
     new_old = json.loads(event['event'])
     tup = (
         event['context']['user_id'],
@@ -173,6 +184,8 @@ def seq_prev(event, users):
                 values {}""".format(user)
         cursor.execute(insert)
 
+    if event['context']['course_id'] not in courses:
+        courses.append(event['context']['course_id'])
     new_old = json.loads(event['event'])
     tup = (
         event['context']['user_id'],
@@ -195,6 +208,8 @@ def problem_show(event, users):
                 values {}""".format(user)
         cursor.execute(insert)
 
+    if event['context']['course_id'] not in courses:
+        courses.append(event['context']['course_id'])
     tup = (
         event['context']['user_id'],
         event['context']['course_id'],
@@ -217,6 +232,8 @@ def showanswer(event, users):
                 values {}""".format(user)
         cursor.execute(insert)
 
+    if event['context']['course_id'] not in courses:
+        courses.append(event['context']['course_id'])
     tup = (
         event['context']['user_id'],
         event['context']['course_id'],
@@ -230,3 +247,14 @@ def showanswer(event, users):
                 values {}""".format(tup)
 
     cursor.execute(insert)
+
+def insert_courses():
+    print(len(courses))
+    #try:
+    #    for c in courses:
+    #        insert = """insert into courses (course)
+    #        values {}""".format(c)
+    #except psycopg2.errors.SyntaxError:
+    #    pass
+
+    #2cursor.execute(insert)

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 from flask import Flask
 from flask_babelex import Babel
@@ -16,26 +17,26 @@ db.app = app
 db.init_app(app)
 
 app.config['check_types'] = dict(
-    showanswer='показан ответ',
-    problem_show='показан ответ',
-    problem_check='проверка ответа'
+    showanswer=u'показан ответ',
+    problem_show=u'показан ответ',
+    problem_check=u'проверка ответа'
 )
 app.config['doc_types'] = dict()
 app.config['enrollment_types'] = dict(
-    enrollment_activated='регистрация на курсе',
-    enrollment_deactivated='завершение курса'
+    enrollment_activated=u'регистрация на курсе',
+    enrollment_deactivated=u'завершение курса'
 )
 app.config['seq_types'] = dict(
-    seq_goto='Переход',
-    seq_next='Следующая',
-    seq_prev='Предыдущая'
+    seq_goto=u'Переход',
+    seq_next=u'Следующая',
+    seq_prev=u'Предыдущая'
 )
 app.config['video_types'] = dict(
-    paused='Пауза',
-    played='Воспроизведение',
-    position_changed='Перемотка',
-    stoped='Остановка',
-    speed_change='Изменение скорости'
+    paused=u'Пауза',
+    played=u'Воспроизведение',
+    position_changed=u'Перемотка',
+    stoped=u'Остановка',
+    speed_change=u'Изменение скорости'
 )
 
 from app.models.data import *

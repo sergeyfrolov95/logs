@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask_admin.contrib.sqla import ModelView
 from app import app, db
 from app.models.data import *
@@ -19,12 +20,12 @@ class SequenceView(ModelView):
     column_list = ('user_id', 'course', 'event_time', 'type', 'old', 'new')
 
     column_labels = dict(
-        user_id='Имя пользователя',
-        course='Идентификатор курса',
-        event_time='Время события',
-        type='Тип события',
-        new='Новое расположение',
-        old='Предыдущее расположение'
+        user_id=u'Имя пользователя',
+        course=u'Идентификатор курса',
+        event_time=u'Время события',
+        type=u'Тип события',
+        new=u'Новое расположение',
+        old=u'Предыдущее расположение'
     )
 
     column_formatters = dict(

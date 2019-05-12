@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask_admin import AdminIndexView, Admin
 
 from app import app, db
@@ -23,14 +24,14 @@ admin = Admin(
     )
 )
 
-admin.add_view(UsersView(Users, name='Пользователи', session=db.session, category='Справочники'))
-admin.add_view(Report1View(Report1, name='Отчет 1', session=db.session, category='Справочники'))
+admin.add_view(UsersView(Users, name=u'Пользователи', session=db.session, category=u'Справочники'))
+admin.add_view(Report1View(Report1, name=u'Отчет 1', session=db.session, category=u'Справочники'))
 
-admin.add_view(CheckAnswerView(CheckAnswerEvents, name='Проверка ответов', session=db.session, category='Типы событий'))
-admin.add_view(LinksView(LinkEvents, name='Переходы по ссылкам', session=db.session, category='Типы событий'))
-admin.add_view(SequenceView(SequenceEvents, name='Переходы по секциям', session=db.session, category='Типы событий'))
-admin.add_view(VideoView(VideoEvents, name='Взаимодействие с видео', session=db.session, category='Типы событий'))
-admin.add_view(DocumentView(DocumentEvents, name='Взаимодействие с докуметами', session=db.session, category='Типы событий'))
-admin.add_view(CertificateView(CertificateEvents, name='Получение сертификата', session=db.session, category='Типы событий'))
-admin.add_view(EnrollmentView(EnrollmentEvents, name='Регистрация на курсе', session=db.session, category='Типы событий'))
-admin.add_view(OthersView(Others, name='Прочие события', session=db.session, category='Типы событий'))
+admin.add_view(CheckAnswerView(CheckAnswerEvents, name=u'Проверка ответов', session=db.session, category=u'Типы событий'))
+admin.add_view(LinksView(LinkEvents, name=u'Переходы по ссылкам', session=db.session, category=u'Типы событий'))
+admin.add_view(SequenceView(SequenceEvents, name=u'Переходы по секциям', session=db.session, category=u'Типы событий'))
+admin.add_view(VideoView(VideoEvents, name=u'Взаимодействие с видео', session=db.session, category=u'Типы событий'))
+admin.add_view(DocumentView(DocumentEvents, name=u'Взаимодействие с докуметами', session=db.session, category=u'Типы событий'))
+admin.add_view(CertificateView(CertificateEvents, name=u'Получение сертификата', session=db.session, category=u'Типы событий'))
+admin.add_view(EnrollmentView(EnrollmentEvents, name=u'Регистрация на курсе', session=db.session, category=u'Типы событий'))
+admin.add_view(OthersView(Others, name=u'Прочие события', session=db.session, category=u'Типы событий'))

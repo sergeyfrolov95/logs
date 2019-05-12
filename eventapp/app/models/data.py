@@ -1,3 +1,4 @@
+# config=utf-8
 from app import db, app
 from datetime import datetime
 
